@@ -30,4 +30,4 @@ EditSurveyForm.propTypes = {
   onEditSurvey: PropTypes.func
 };  
 
-export default EditSurvey;
+export default EditSurveyForm;

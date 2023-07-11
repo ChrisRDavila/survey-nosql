@@ -1,13 +1,20 @@
 import React from "react";
 import Header from "./Header";
 import SurveyControl from "./SurveyControl";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App(){
-  return (
-    <React.Fragment>
+  return ( 
+    <Router>
       <Header />
-      <SurveyControl />
-    </React.Fragment>
+      <Routes>
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/new-survey" element={<SurveyControl />} />
+      </Routes>
+    </Router>
   );
 }
 

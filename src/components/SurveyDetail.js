@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function SurveyDetail(props){
-  const { survey, onClickingDelete, onClickingEdit, onClickingSend, response } = props;
+  const { survey, onClickingDelete, onClickingEdit, onClickingSend, responseAnswers } = props;
 
   function handleResponseFormSubmission(event){
     event.preventDefault();
@@ -34,12 +34,13 @@ function SurveyDetail(props){
           placeholder='Answer'/>
         <button type='submit'>Send</button>
       </form>
-      {response &&
+      {responseAnswers.map((response) =>
         <div>
           <h3>Response 1: {response.firstResponse}</h3>
           <h3>Response 2: {response.secondResponse}</h3>
           <h3>Response 3: {response.thirdResponse}</h3>
         </div>
+        )
       }
       <hr/>
       <button onClick={ onClickingEdit }>Update Survey</button>

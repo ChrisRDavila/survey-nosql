@@ -6,6 +6,7 @@ function SurveyList(props){
 
   return (
     <React.Fragment>
+      <button onClick={props.onDashboardClick}>Dashboard</button>
       <hr/>
       {props.surveyList.map((survey) =>
         <Survey
@@ -20,7 +21,8 @@ function SurveyList(props){
 
 SurveyList.propTypes = {
   surveyList: PropTypes.array,
-  onSurveySelection: PropTypes.func
+  onSurveySelection: PropTypes.func,
+  onDashboardClick: PropTypes.func
 };
 
 export default SurveyList;

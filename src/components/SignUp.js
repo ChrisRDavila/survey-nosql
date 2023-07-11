@@ -7,7 +7,7 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const auth = get Auth();
+    const auth = getAuth();
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -16,7 +16,7 @@ function SignUp() {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log('Error registering user'errorCode, errorMessage);
+      console.log('Error registering user', errorCode, errorMessage);
     }
   }
 
@@ -29,12 +29,15 @@ function SignUp() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+      <br />
+      <br />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={e => setPassword(e.target.value)}
         />
+      <hr />
       <button type="submit">Sign Up</button>
     </form>
   );
