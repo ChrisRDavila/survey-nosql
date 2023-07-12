@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SurveyForm from "./SurveyForm";
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+
 
 function NewSurvey(props) {
 
@@ -17,12 +20,20 @@ function NewSurvey(props) {
   }
 
   return (
-    < React.Fragment >
-      <SurveyForm
-        formSubmissionHandler={handleNewSurveyFormSubmission}
-        buttonText="Submit"
-      />
-    </React.Fragment >
+    <Container className="d-flex justify-content-center align-items-center">
+      <Card className="mt-5" style={{ width: '80%' }}>
+        <Card.Body>
+          <Card.Title>New Survey</Card.Title>
+          <Card.Subtitle className="mb-4 text-muted">Fill in the details below</Card.Subtitle>
+          <Card.Text className="mb-3">
+            <SurveyForm
+              formSubmissionHandler={handleNewSurveyFormSubmission}
+              buttonText="Submit"
+            />
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 

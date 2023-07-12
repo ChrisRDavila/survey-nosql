@@ -1,50 +1,75 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 function SurveyDetail(props){
   const { survey, onClickingDelete, onClickingEdit, onClickingSend, responseAnswers } = props;
 
-  function handleResponseFormSubmission(event){
+  function handleVariableFormSubmission(event){
     event.preventDefault();
     onClickingSend({
-      firstResponse: event.target.firstResponse.value, 
-      secondResponse: event.target.secondResponse.value,
-      thirdResponse: event.target.thirdResponse.value,
+      response1: event.target.response1.value, 
+      response2: event.target.response2.value,
+      response3: event.target.response3.value,
       surveyId: survey.id
     });
   }
 
   return (
     <React.Fragment>
-      <form onSubmit={handleResponseFormSubmission}>
+      <Form onSubmit={handleVariableFormSubmission}>
         <h1>Survey made by: {survey.creatorEmail}</h1>
         <h3>{survey.title}</h3>
         <h3>{survey.Question1}</h3>
-        Answer: <input
-          type='text'
-          name='firstResponse'
-          placeholder='Answer'/>
-        Answer: <input
-          type='text'
-          name='secondResponse'
-          placeholder='Answer'/>
-        Answer: <input
-          type='text'
-          name='thirdResponse'
-          placeholder='Answer'/>
-        <button type='submit'>Send</button>
-      </form>
-      {responseAnswers.map((response) =>
-        <div>
-          <h3>Response 1: {response.firstResponse}</h3>
-          <h3>Response 2: {response.secondResponse}</h3>
-          <h3>Response 3: {response.thirdResponse}</h3>
-        </div>
+        <Form.Group controlId="response1" className="mb-3">
+          <Form.Label>Answer</Form.Label>
+          <Form.Control
+            type="text"
+            name="response1"
+            placeholder="Answer"
+          />
+        </Form.Group>
+        <Form.Group controlId="response2" className="mb-3">
+          <Form.Label>Answer</Form.Label>
+          <Form.Control
+            type="text"
+            name="response2"
+            placeholder="Answer"
+          />
+        </Form.Group>
+        <Form.Group controlId="response3" className="mb-3">
+          <Form.Label>Answer</Form.Label>
+          <Form.Control
+            type="text"
+            name="response3"
+            placeholder="Answer"
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Send
+        </Button>
+      </Form>
+
+      {survey.creatorEmail !== props.currentUserEmail ? null : <button onClick={props.onClickingEdit}>Update Survey</button>}
+      {survey.creatorEmail !== props.currentUserEmail ? null : <button onClick={() => onClickingDelete(survey.id)}>Delete Survey</button>}
+      
+      {survey.creatorEmail !== props.currentUserEmail ? null :
+        responseAnswers.map((response) =>
+        <Card className="mb-4">
+          <Card.Body>
+            <Card.Title>Responses</Card.Title>
+            <Card.Text>Response 1: {response.response1}</Card.Text>
+            <Card.Text>Response 2: {response.response2}</Card.Text>
+            <Card.Text>Response 3: {response.response3}</Card.Text>
+          </Card.Body>
+        </Card>
         )
       }
       <hr/>
-      <button onClick={ onClickingEdit }>Update Survey</button>
-      <button onClick={()=> onClickingDelete(survey.id) }>Delete Survey</button>
+      <Button variant="outline-primary" onClick={ onClickingEdit } className="me-2">Update Survey</Button>
+      <Button variant="outline-danger" onClick={()=> onClickingDelete(survey.id) }>Delete Survey</Button>
       <hr/>
     </React.Fragment>
   );

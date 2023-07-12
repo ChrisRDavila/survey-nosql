@@ -11,7 +11,10 @@ function SurveyList(props){
       {props.surveyList.map((survey) =>
         <Survey
           whenSurveyClicked = { props.onSurveySelection }
-          name={survey.name}
+          title={survey.title}
+          question1={survey.question1}
+          question2={survey.question2}
+          question3={survey.question3}
           id={survey.id}
           key={survey.id}/>
       )}
@@ -20,7 +23,7 @@ function SurveyList(props){
 }
 
 SurveyList.propTypes = {
-  surveyList: PropTypes.array,
+  SurveyList: PropTypes.array,
   onSurveySelection: PropTypes.func,
   onDashboardClick: PropTypes.func
 };

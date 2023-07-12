@@ -9,9 +9,9 @@ function EditSurveyForm(props){
     event.preventDefault();
     props.onEditSurvey({
       title: event.target.title.value, 
-      firstQuestion: event.target.firstQuestion.value, 
-      secondQuestion: event.target.secondQuestion.value, 
-      thirdQuestion: event.target.thirdQuestion.value, 
+      question1: event.target.question1.value, 
+      question2: event.target.question2.value, 
+      question3: event.target.question3.value, 
       id: survey.id
   });
 }

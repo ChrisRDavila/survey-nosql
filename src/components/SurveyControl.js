@@ -8,7 +8,7 @@ import EditSurveyForm from "./EditSurveyForm";
 import DashBoard from "./Dashboard";
 import { db, auth } from './../firebase.js';
 import { collection, addDoc, updateDoc, deleteDoc, query, onSnapshot, where, getFirestore, doc, getDoc } from "firebase/firestore";
-// import ResponseForm from "./ResponseForm";
+// import VariableForm from "./VariableForm";
 
 function SurveyControl(props){
 
@@ -20,7 +20,7 @@ function SurveyControl(props){
   const [dashboardDisplay, setDashboardDisplay] = useState(false);
   const [responseList, setresponseList] = useState([]);
   const [questionsList, setQuestionsList] = useState([]);
-  // const [responseForm, setResponseForm] = useState([]);
+  // const [variableForm, setVariableForm] = useState([]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -28,8 +28,9 @@ function SurveyControl(props){
       (snapshot) => {
         const surveys = [];
         snapshot.forEach((doc) => {
-          surveys.push({ ...doc.data().creatorEmail,
-            title: doc.date().title,
+          surveys.push({
+            creatorEmail: doc.data().creatorEmail,
+            title: doc.data().title,
             questions: doc.data().questions,
             id: doc.id
           });
@@ -88,6 +89,17 @@ function SurveyControl(props){
     }
   }
 
+  // const handleClick = () => {
+  //   if (selectedSurvey != null) {
+  //     setFormVisibleOnPage(false);
+  //     // new code!
+  //     setSelectedSurvey(null);
+  //     setEditSurvey(false);
+  //   } else {
+  //     setFormVisibleOnPage(!formVisibleOnPage);
+  //   }
+  // }
+
   const handleDashboardClick = () => {
     setDashboardDisplay(true);
   };
@@ -118,23 +130,26 @@ function SurveyControl(props){
     setFormVisibleOnPage(false);
   }
 
+
   const handleChangingSelectedSurvey = (id) => {
-    const selectedSurvey = mainSurveyList.filter((survey) => survey.id === id)[0];
-    setSelectedSurvey(selectedSurvey);
-    updateQuestionList(id);
+    const selection = mainSurveyList.filter((survey) => survey.id === id)[0];
+    setSelectedSurvey(selection);
+    // updateQuestionList(id);
   }
 
   const handleSendingSurvey = async (responseAnswers) => {
-    const result = await addDoc(collection(db, "responses"), responseAnswers);
+    await addDoc(collection(db, "responses"), responseAnswers);
     setSelectedSurvey(null);
 
-    const newMainSurveyList = mainSurveyList.filter((survey) => survey.id !== selectedSurvey.id);
-    setMainSurveyList(newMainSurveyList);
-    setSelectedSurvey(null);
+  // const newMainSurveyList = mainSurveyList.filter((survey) => survey.id !== selectedSurvey.id);
+  //   setMainSurveyList(newMainSurveyList);
+  //   setSelectedSurvey(null);
 
-    const newResponseList = responseList.filter((response) => response.id !== result.id);
-    setresponseList(newResponseList);
-    setSelectedSurvey(null);
+
+
+  // const newResponseList = responseList.filter((response) => response.id !== result.id);
+  //   setresponseList(newResponseList);
+  //   setSelectedSurvey(null);
   };
 
 
@@ -164,6 +179,7 @@ function SurveyControl(props){
       survey={selectedSurvey}
       responseAnswers={responseList}
       currentQuestions={questionsList}
+      // currentQuestions={selectedSurvey.questions}
       currentUserEmail={props.userEmail}
       onClickingSend={handleSendingSurvey}
       onClickingDelete={handleDeletingSurvey}
@@ -174,8 +190,8 @@ function SurveyControl(props){
       onNewSurveyCreation={handleAddingNewSurveyToList}
       currentUserEmail={props.userEmail}/>
     buttonText = "Return to Survey List";
-  // } else if (responseForm) {
-  //   currentlyVisibleState = <ResponseForm
+  // } else if (variableForm) {
+  //   currentlyVisibleState = <VariableForm
   //   onNewSurveyCreation={handleAddingNewSurveyToList}
   //   currentUserEmail={props.userEmail}/>
   } else if (dashboardDisplay) {
@@ -196,7 +212,7 @@ function SurveyControl(props){
   return (
     <React.Fragment>
       {currentlyVisibleState}
-      {props.userEmail ? null : <button onClick={handleClick}>{buttonText}</button>}
+      {props.userEmail ? null : <button onClick={handleClick}>Create</button>}
     </React.Fragment>
   );
 }

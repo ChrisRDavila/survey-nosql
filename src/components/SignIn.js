@@ -1,35 +1,23 @@
 import React, { useState } from "react";
 import { auth } from "./../firebase.js";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function SignIn(props){  
 
   const { onSignIn } = props;
 
-  // const [signUpSuccess, setSignUpSuccess] = useState(null);
   const [signInSuccess, setSignInSuccess] = useState(null);
   const [signOutSuccess, setSignOutSuccess] = useState(null);
 
-  // function doSignUp(event) {
-  //   event.preventDefault();
-  //   const email = event.target.email.value;
-  //   const password = event.target.password.value;
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-
-  //       setSignUpSuccess(`You've successfully signed up, ${userCredential.user.email}!`)
-
-  //     })
-  //     .catch((error) => {
-
-  //       setSignUpSuccess(`There was an error signing up: ${error.message}!`)
-
-  //     });
-  // }
-
   function doSignIn(event) {
     event.preventDefault();
-    const email = event.target.signinEmail.value;
+    const email = event.target.email.value;
     const password = event.target.signinPassword.value;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -51,40 +39,32 @@ function SignIn(props){
   }
 
   return (
-    <React.Fragment>
-      {/* <h1>Sign up</h1>
-      {signUpSuccess}
-      <form onSubmit={doSignUp}>
-        <input
-          type='text'
-          name='email'
-          placeholder='email' />
-        <input
-          type='password'
-          name='password'
-          placeholder='Password' />
-        <button type='submit'>Sign up</button>
-      </form> */}
+    <Container className="my-auto">
+      <Row>
+        <Col md={{ span: 6, offset: 3 }}>
+          <h1 className="mb-3">Sign In</h1>
+          {signInSuccess && <Alert variant="success">{signInSuccess}</Alert>}
+          <Form onSubmit={doSignIn} className="mb-5">
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" name='email' />
+            </Form.Group>
 
-      <h1>Sign In</h1>
-      {signInSuccess}
-      <form onSubmit={doSignIn}>
-        <input
-          type='text'
-          name='signinEmail'
-          placeholder='email' />
-        <input
-          type='password'
-          name='signinPassword'
-          placeholder='Password' />
-        <button type='submit'>Sign in</button>
-      </form>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" name='signinPassword' />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Sign in
+            </Button>
+          </Form>
 
-      <h1>Sign Out</h1>
-      {signOutSuccess}
-      <br />
-      <button onClick={doSignOut}>Sign out</button>
-    </React.Fragment>
+          <h1 className="mb-3">Sign Out</h1>
+          {signOutSuccess && <Alert variant="success">{signOutSuccess}</Alert>}
+          <Button variant="danger" onClick={doSignOut}>Sign out</Button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
