@@ -20,9 +20,8 @@ function SurveyDetail(props){
   return (
     <React.Fragment>
       <Form onSubmit={handleVariableFormSubmission}>
-        <h1>Survey made by: {survey.creatorEmail}</h1>
         <h3>{survey.title}</h3>
-        <h3>{survey.Question1}</h3>
+        <h3>{survey.question1}</h3>
         <Form.Group controlId="response1" className="mb-3">
           <Form.Label>Answer</Form.Label>
           <Form.Control
@@ -52,16 +51,19 @@ function SurveyDetail(props){
         </Button>
       </Form>
 
-      {survey.creatorEmail !== props.currentUserEmail ? null : <button onClick={props.onClickingEdit}>Update Survey</button>}
-      {survey.creatorEmail !== props.currentUserEmail ? null : <button onClick={() => onClickingDelete(survey.id)}>Delete Survey</button>}
+      {/* {survey.creatorEmail !== props.currentUserEmail ? null : <button onClick={props.onClickingEdit}>Update Survey</button>}
+      {survey.creatorEmail !== props.currentUserEmail ? null : <button onClick={() => onClickingDelete(survey.id)}>Delete Survey</button>} */}
       
       {survey.creatorEmail !== props.currentUserEmail ? null :
         responseAnswers.map((response) =>
         <Card className="mb-4">
           <Card.Body>
             <Card.Title>Responses</Card.Title>
+            <Card.Text>Question 1: {survey.question1}</Card.Text>
             <Card.Text>Response 1: {response.response1}</Card.Text>
+            <Card.Text>Question 2: {survey.question2}</Card.Text>
             <Card.Text>Response 2: {response.response2}</Card.Text>
+            <Card.Text>Question 3: {survey.question3}</Card.Text>
             <Card.Text>Response 3: {response.response3}</Card.Text>
           </Card.Body>
         </Card>
@@ -80,7 +82,7 @@ SurveyDetail.propTypes = {
   onClickingDelete: PropTypes.func,
   onClickingEdit: PropTypes.func,
   onClickingSend: PropTypes.func,
-  response: PropTypes.object
+  responseAnswers: PropTypes.object
 };
 
 export default SurveyDetail;

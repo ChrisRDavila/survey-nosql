@@ -19,7 +19,7 @@ function SurveyControl(props){
   const [error, setError] = useState(null);
   const [dashboardDisplay, setDashboardDisplay] = useState(false);
   const [responseList, setresponseList] = useState([]);
-  const [questionsList, setQuestionsList] = useState([]);
+  // const [questionsList, setQuestionsList] = useState([]);
   // const [variableForm, setVariableForm] = useState([]);
 
   useEffect(() => {
@@ -61,20 +61,20 @@ function SurveyControl(props){
     };
   }, [selectedSurvey]);
 
-  const updateQuestionList = (id) => {
-    (async () => {
-      const db = getFirestore();
-      const docRef = doc(db, "surveys", id);
+  // const updateQuestionList = (id) => {
+  //   (async () => {
+  //     const db = getFirestore();
+  //     const docRef = doc(db, "surveys", id);
 
-      try {
-        const docSnap = await getDoc(docRef);
-          setQuestionsList(docSnap.data().questions);
-        } catch (error) {
-          console.log("No such document!");
-        }
-        console.log("updated questionlist")
-      })();
-  };
+  //     try {
+  //       const docSnap = await getDoc(docRef);
+  //         setQuestionsList(docSnap.data().questions);
+  //       } catch (error) {
+  //         console.log("No such document!");
+  //       }
+  //       console.log("updated questionlist")
+  //     })();
+  // };
   
 
 
@@ -134,22 +134,11 @@ function SurveyControl(props){
   const handleChangingSelectedSurvey = (id) => {
     const selection = mainSurveyList.filter((survey) => survey.id === id)[0];
     setSelectedSurvey(selection);
-    // updateQuestionList(id);
   }
 
   const handleSendingSurvey = async (responseAnswers) => {
     await addDoc(collection(db, "responses"), responseAnswers);
     setSelectedSurvey(null);
-
-  // const newMainSurveyList = mainSurveyList.filter((survey) => survey.id !== selectedSurvey.id);
-  //   setMainSurveyList(newMainSurveyList);
-  //   setSelectedSurvey(null);
-
-
-
-  // const newResponseList = responseList.filter((response) => response.id !== result.id);
-  //   setresponseList(newResponseList);
-  //   setSelectedSurvey(null);
   };
 
 
@@ -162,10 +151,7 @@ function SurveyControl(props){
         <h1>You must be signed in to access the queue.</h1>
       </React.Fragment>
     )
-  } else if (auth.currentUser != null) {
-
-    // let currentlyVisibleState = null;
-    // let buttonText = null; 
+  } else if (auth.currentUser != null) { 
 
   if (error) {
       currentlyVisibleState = <p>There was an error: {error}</p>
@@ -174,11 +160,11 @@ function SurveyControl(props){
       survey={selectedSurvey}
       onEditSurvey={handleEditingSurveyInList} />
     buttonText = "Return to Survey List";
-  } else if (selectedSurvey != null && questionsList) {
+  } else if (selectedSurvey != null && responseList.length === 0) {
     currentlyVisibleState = <SurveyDetail
       survey={selectedSurvey}
       responseAnswers={responseList}
-      currentQuestions={questionsList}
+      // currentQuestions={questionsList}
       // currentQuestions={selectedSurvey.questions}
       currentUserEmail={props.userEmail}
       onClickingSend={handleSendingSurvey}
@@ -207,8 +193,7 @@ function SurveyControl(props){
       onDashboardClick={handleDashboardClick} />;
     buttonText = "Add Survey";
   }
-}
-
+} 
   return (
     <React.Fragment>
       {currentlyVisibleState}

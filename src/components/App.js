@@ -4,7 +4,8 @@ import Header from "./Header";
 import SurveyControl from "./SurveyControl";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-// import SurveyList from "./SurveyList";
+import SurveyList from "./SurveyList";
+import SurveyDetail from "./SurveyDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App(){
@@ -18,11 +19,10 @@ function App(){
     <Router>
       <Header />
       <Routes>
-        <Route path="/sign-in" element={<SignIn 
-        onSignIn={handleUserEmail} />} />
+        <Route path="/sign-in" element={<SignIn onSignIn={handleUserEmail} />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/new-survey" element={<SurveyControl userEmail={userEmail}/>} />
-        {/* <Route path="/survey-list" element={<SurveyList surveyList />} /> */}
+        <Route path="/survey-list" element={<SurveyControl userEmail={userEmail}/>} />
+        <Route path="/survey-list/:id" element={<SurveyDetail />} />
       </Routes>
     </Router>
   );

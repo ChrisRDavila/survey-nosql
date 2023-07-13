@@ -25,7 +25,7 @@ function Header() {
       <Container>
         <Nav className="ml-auto">
           <Nav.Link as={Link} to="/">Home</Nav.Link>
-          <Nav.Link as={Link} to="/new-survey">Survey List</Nav.Link>
+          <Nav.Link as={Link} to="/survey-list">Survey List</Nav.Link>
           {!isSignedIn ? (
             <>
               <Nav.Link as={Link} to="/sign-in">Sign In</Nav.Link>
