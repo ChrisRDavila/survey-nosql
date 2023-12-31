@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# survey-nosql
+
+practice building project using firebase/noSQL and hooks to create survey where someone can nut questions and answers on reusable form components
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
